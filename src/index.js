@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
+// Lowest level of 3 components, is just the btn used by Board
+// Props passed down from high to low level
 class Square extends React.Component {
   render() {
     return (
@@ -11,7 +12,7 @@ class Square extends React.Component {
     );
   }
 }
-
+// Middle level, creates prop for renderSquare
 class Board extends React.Component {
   renderSquare(i) {
     return <Square value={i}/>;
@@ -42,7 +43,7 @@ class Board extends React.Component {
     );
   }
 }
-
+// Highets level, calls board, which calls Square
 class Game extends React.Component {
   render() {
     return (
