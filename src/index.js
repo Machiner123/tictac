@@ -25,9 +25,13 @@ class Board extends React.Component {
 
   // Makes a copy of state.squares, assigns 'X' to index passed to it
   // by renderSquare, updates state by replacing old squares array with
-  // updated copy.
+  // updated copy. If there is a winner, or if the square being clicked
+  // is non falsy, return early and ignore the click event
   handleClick(i){
     const squares = this.state.squares.slice()
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
     squares[i] = this.state.xIsNext ? 'X' : 'O'
     this.setState({
       squares: squares,
@@ -44,7 +48,9 @@ class Board extends React.Component {
       />
     )
   }
-
+  // Every time the board is rendered, which is every time there is a change,
+  // Go through the 'lines' in calculateWinner and if it returns none falsy,
+  // display a winner
   render() {
     const winner = calculateWinner(this.state.squares);
     let status;
@@ -79,6 +85,15 @@ class Board extends React.Component {
 }
 // Highets level, calls board, which calls Square
 class Game extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      history: [{
+        squares: Array(9).fill(null),
+      }],
+      xIsNext: true,
+    };
+  }
   render() {
     return (
       <div className="game">
