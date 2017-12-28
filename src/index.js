@@ -109,6 +109,8 @@ class Game extends React.Component {
   }
 }
 
+// Every time squares are rendered, the state is mapped to this pattern,
+// and if the squares are ever all equal in a line, return which player it is
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
